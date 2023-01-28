@@ -10,6 +10,10 @@ const app = express();
 
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
 function runServer() {
   const server = app.listen(PORT, () => {
     console.log(`[server] runned. PORT: ${PORT}`);
