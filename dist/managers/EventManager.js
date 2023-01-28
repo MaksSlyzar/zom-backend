@@ -36,7 +36,7 @@ class EventManager {
         console.log("[event] socket setup");
         this.io = new socketio.Server(server, {
             cors: {
-                origin: "http://localhost:4000",
+                origin: "*",
                 methods: ["GET", "POST"]
             }
         });

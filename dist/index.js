@@ -10,6 +10,9 @@ const EventManager_1 = __importDefault(require("./managers/EventManager"));
 const GameManager_1 = __importDefault(require("./managers/GameManager"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+});
 function runServer() {
     const server = app.listen(config_json_1.PORT, () => {
         console.log(`[server] runned. PORT: ${config_json_1.PORT}`);
