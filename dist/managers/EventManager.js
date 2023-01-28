@@ -22,21 +22,34 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const socketio = __importStar(require("socket.io"));
+const PlayersManager_1 = __importDefault(require("./PlayersManager"));
 class EventManager {
     constructor() {
         this.io = null;
     }
     setIo(server) {
         console.log("[event] socket setup");
-        this.io = new socketio.Server(server);
+        this.io = new socketio.Server(server, {
+            cors: {
+                origin: "http://localhost:4000",
+                methods: ["GET", "POST"]
+            }
+        });
         this.io.on("connection", (socket) => {
             console.log("Connection");
             socket.on("createPlayerEvent", () => this.createPlayerEvent(socket));
+            socket.on("disconnect", () => {
+                PlayersManager_1.default.deletePlayerBySocketId(socket.id);
+            });
         });
     }
     createPlayerEvent(socket) {
+        PlayersManager_1.default.createPlayer(socket);
     }
     update() {
     }

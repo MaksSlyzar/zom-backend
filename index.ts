@@ -3,6 +3,7 @@ import { PORT } from "./config.json";
 import cors from "cors";
 import * as socketio from "socket.io";
 import EventManager from "./managers/EventManager";
+import GameManager from "./managers/GameManager";
 
 
 const app = express();
@@ -15,5 +16,7 @@ function runServer() {
   });
 
   EventManager.setIo(server);
+  GameManager.update();
 }
+
 runServer();
