@@ -15,7 +15,7 @@ class GameManager {
       });
     });
 
-    setTimeout(() => this.update(), 25);
+    setTimeout(() => this.update(), 16);
   }
 }
 
