@@ -10,7 +10,7 @@ class GameManager {
       const ownPlayer = PlayersManager.findPlayerById(player.id);
 
       player.socket.emit("updateEvent", {
-        playersData: playersNetworkData.filter(_player =>  _player.id !== player.id ),
+        playersData: playersNetworkData.filter(_player => _player.id !== player.id ),
         ownPlayerData: ownPlayer==null? null: ownPlayer.networkData()
       });
     });

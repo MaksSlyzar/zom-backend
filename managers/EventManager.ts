@@ -24,9 +24,21 @@ class EventManager {
       console.log("Connection");
 
       socket.on("createPlayerEvent", () => this.createPlayerEvent(socket));
+      
       socket.on("disconnect", () => {
         PlayersManager.deletePlayerBySocketId(socket.id);
-      })
+      });
+      
+      socket.on("setPlayerTarget", (data) => {
+        console.log(data);
+        const player = PlayersManager.findPlayerById(data.id);
+        
+        if (!player)
+          return;
+        
+        player.targetX = data.targetX;
+        player.targetY = data.targetY;
+      });
     });
   }
 

@@ -46,6 +46,14 @@ class EventManager {
             socket.on("disconnect", () => {
                 PlayersManager_1.default.deletePlayerBySocketId(socket.id);
             });
+            socket.on("setPlayerTarget", (data) => {
+                console.log(data);
+                const player = PlayersManager_1.default.findPlayerById(data.id);
+                if (!player)
+                    return;
+                player.targetX = data.targetX;
+                player.targetY = data.targetY;
+            });
         });
     }
     createPlayerEvent(socket) {

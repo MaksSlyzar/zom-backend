@@ -15,7 +15,7 @@ class GameManager {
                 ownPlayerData: ownPlayer == null ? null : ownPlayer.networkData()
             });
         });
-        setTimeout(() => this.update(), 25);
+        setTimeout(() => this.update(), 16);
     }
 }
 exports.default = new GameManager();
