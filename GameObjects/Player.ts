@@ -1,4 +1,6 @@
 import {Socket} from "socket.io";
+import WorldObjectsManager from "../managers/WorldObjectsManager";
+import CheckCollision from "../modules/Collider/CheckCollision";
 
 class Player {
   posX: number;
@@ -31,8 +33,35 @@ class Player {
         y: this.posY + Math.sin(rad) * this.movespeed
     };
 
+    const collidedObjects = WorldObjectsManager.objects.filter(wo => {
+      if (wo.collision == false)
+        return false;
+      
+
+      const playerCollider = {
+        x: newPosition.x,
+        y: newPosition.y,
+        width: 50,
+        height: 50
+      };
+
+      const woCollider = {
+        x: wo.posX + wo.collider.x,
+        y: wo.posY + wo.collider.y,
+        width: wo.collider.width,
+        height: wo.collider.height
+      };
+
+      return !CheckCollision(playerCollider, woCollider);
+    });
+
+    if (collidedObjects.length > 0)
+      return;
+
     this.posX = newPosition.x;
     this.posY = newPosition.y;
+
+
   }
 
   networkData () {

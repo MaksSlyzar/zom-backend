@@ -1,5 +1,6 @@
 import Player from "../GameObjects/Player";
 import { Socket } from "socket.io";
+import WorldObjectsManager from "./WorldObjectsManager";
 
 class PlayerManager {
   players: Array<Player> = [];
@@ -15,6 +16,17 @@ class PlayerManager {
 
     console.log(`[playerManager] new player`);
     newPlayer.socket.emit("playerCreated", newPlayer.networkData());
+    
+
+    const playersNetworkData = this.players.map(pl => pl.networkData());
+
+    newPlayer.socket.emit("updateEvent", {
+      playersData: playersNetworkData.filter(_player => _player.id !== newPlayer.id ),
+      ownPlayerData: newPlayer.networkData(),
+      worldObjectsData: WorldObjectsManager.objects.map(wo => wo.networkData())
+    });
+
+    console.log(WorldObjectsManager.objects.length, "adasdasd")
   }
 
   update () {
